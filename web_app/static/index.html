@@ -1,0 +1,3394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AegisForensic AI Intelligence Studio - Enterprise Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-card: #f8fafc;
+            --bg-elevated: #ffffff;
+            --border-dim: #e2e8f0;
+            --border-glow: #cbd5e1;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --accent-cyan: #0284c7;
+            --accent-blue: #2563eb;
+            --accent-indigo: #4f46e5;
+            --accent-emerald: #059669;
+            --accent-rose: #dc2626;
+            --accent-amber: #d97706;
+            --accent-purple: #7c3aed;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --sidebar-width: 290px;
+        }
+
+        body.dark-theme {
+            --bg-base: #060911;
+            --bg-surface: #0b1120;
+            --bg-card: #121c33;
+            --bg-elevated: #182544;
+            --border-dim: #1d2b4d;
+            --border-glow: #283a68;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        body.dark-theme {
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.16) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.16) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.16) 0px, transparent 50%);
+        }
+
+        /* Top Government/Enterprise Security Header Banner */
+        .case-banner {
+            background: linear-gradient(90deg, #f1f5f9, #e0e7ff, #f1f5f9);
+            border-bottom: 1px solid var(--border-dim);
+            padding: 0.45rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            color: #475569;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+        }
+
+        body.dark-theme .case-banner {
+            background: linear-gradient(90deg, #090e1c, #191438, #090e1c);
+            color: var(--text-muted);
+        }
+
+        .case-banner strong {
+            color: var(--accent-blue);
+        }
+
+        body.dark-theme .case-banner strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Top Header Navbar */
+        header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-dim);
+            padding: 0.9rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        body.dark-theme header {
+            background: rgba(11, 17, 32, 0.95);
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6, #ec4899);
+            background-size: 300% 300%;
+            animation: gradientShift 5s ease infinite, float3D 6s ease-in-out infinite;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.15) rotate(-6deg) translateY(-4px);
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.6);
+        }
+
+        .brand-text h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: linear-gradient(90deg, #0284c7, #2563eb, #7c3aed, #ec4899);
+            background-size: 200% auto;
+            animation: gradientShift 8s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text span {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        /* Device HUD Pill */
+        .device-hud {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: #ffffff;
+            padding: 0.55rem 1.3rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-dim);
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+
+        .device-hud:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+            border-color: var(--accent-blue);
+        }
+
+        body.dark-theme .device-hud {
+            background: rgba(18, 28, 51, 0.85);
+            border-color: var(--border-glow);
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .status-dot.online {
+            background: #10b981;
+            box-shadow: 0 0 14px #10b981, 0 0 4px #34d399;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .status-dot.error {
+            background: #f43f5e;
+            box-shadow: 0 0 14px #f43f5e;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* 3D Animations & Kinetic Keyframes */
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-7px) rotate(-1.5deg); }
+        }
+
+        @keyframes pulseGlow3D {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 10px 30px rgba(124, 58, 237, 0.65), 0 0 25px rgba(236, 72, 153, 0.4);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes tab3DEnter {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) translateY(22px) rotateX(3deg) scale(0.985);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) translateY(0) rotateX(0deg) scale(1);
+            }
+        }
+
+        @keyframes specShine {
+            0% { transform: translateX(-150%) rotate(45deg); }
+            100% { transform: translateX(250%) rotate(45deg); }
+        }
+
+        /* Header Action Buttons */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            background: #ffffff;
+            color: var(--text-primary);
+            border: 1px solid var(--border-dim);
+            padding: 0.65rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            font-family: var(--font-sans);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transform-style: preserve-3d;
+        }
+
+        body.dark-theme .btn {
+            background: var(--bg-card);
+            border-color: var(--border-glow);
+        }
+
+        .btn:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7, #2563eb, #7c3aed);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(30deg);
+            animation: specShine 4s linear infinite;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.55), 0 0 15px rgba(124, 58, 237, 0.4);
+            transform: translateY(-3px) scale(1.03) rotateX(3deg);
+        }
+
+        .btn-sm {
+            padding: 0.38rem 0.8rem;
+            font-size: 0.78rem;
+            border-radius: 7px;
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.08));
+            color: var(--accent-blue);
+            border: 1px solid rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-accent:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.15));
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            font-weight: 700;
+            padding: 0.38rem 0.8rem;
+            border-radius: 7px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: #ffffff;
+            border-color: #dc2626;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.45);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        body.dark-theme .btn-delete {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fda4af;
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        body.dark-theme .btn-delete:hover {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: #ffffff;
+        }
+
+        /* 2-COLUMN WORKSPACE LAYOUT (SIDEBAR + CONTENT) */
+        .app-body {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 110px);
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border-dim);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-shrink: 0;
+            position: sticky;
+            top: 75px;
+            height: calc(100vh - 75px);
+            overflow-y: auto;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-section-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            padding: 0 0.75rem 0.6rem;
+            border-bottom: 1px solid var(--border-dim);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .side-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            perspective: 800px;
+        }
+
+        .side-tab-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .side-tab-btn .tab-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .side-tab-btn .tab-icon {
+            font-size: 1.25rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(148, 163, 184, 0.12);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .side-tab-btn:hover {
+            color: var(--text-primary);
+            background: #ffffff;
+            border-color: rgba(37, 99, 235, 0.25);
+            transform: translateX(6px) scale(1.02);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
+        }
+
+        body.dark-theme .side-tab-btn:hover {
+            background: rgba(18, 28, 51, 0.85);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-tab-btn:hover .tab-icon {
+            transform: scale(1.2) rotate(6deg);
+        }
+
+        .side-tab-btn.active {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(124, 58, 237, 0.08));
+            color: var(--accent-blue);
+            border-color: rgba(37, 99, 235, 0.35);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+            transform: translateX(6px);
+            font-weight: 700;
+        }
+
+        body.dark-theme .side-tab-btn.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.12));
+            color: #38bdf8;
+            border-color: rgba(6, 182, 212, 0.45);
+            box-shadow: 0 6px 22px rgba(6, 182, 212, 0.25);
+        }
+
+        .side-tab-btn.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            bottom: 15%;
+            width: 4px;
+            border-radius: 0 4px 4px 0;
+            background: linear-gradient(180deg, #0284c7, #7c3aed);
+            box-shadow: 0 0 12px var(--accent-blue);
+        }
+
+        .side-tab-btn.active .tab-icon {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
+            transform: scale(1.12);
+        }
+
+        .side-badge {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            padding: 0.18rem 0.65rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .side-tab-btn.active .side-badge {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .sidebar-actions {
+            border-top: 1px solid var(--border-dim);
+            padding-top: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        /* MAIN CONTENT WORKSPACE */
+        .main-content {
+            flex: 1;
+            padding: 1.5rem 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 1500px;
+        }
+
+        /* 3D Tab View Container */
+        .tab-pane {
+            animation: tab3DEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* HIGH-VISIBILITY 3D TIMEFRAME PANEL */
+        .timeframe-panel {
+            background: #ffffff;
+            border: 1px solid var(--border-dim);
+            border-radius: 18px;
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        body.dark-theme .timeframe-panel {
+            background: var(--bg-surface);
+            border-color: var(--border-dim);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .timeframe-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .timeframe-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeframe-active-badge {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(124, 58, 237, 0.1));
+            color: var(--accent-blue);
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+        }
+
+        body.dark-theme .timeframe-active-badge {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.2));
+            color: #38bdf8;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 2px 10px rgba(6, 182, 212, 0.3);
+        }
+
+        .timeframe-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        .time-btn {
+            background: #ffffff;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
+            padding: 0.58rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+        }
+
+        body.dark-theme .time-btn {
+            background: var(--bg-card);
+            border-color: var(--border-dim);
+        }
+
+        .time-btn:hover {
+            color: var(--text-primary);
+            background: #f8fafc;
+            border-color: var(--accent-blue);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .time-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb, #7c3aed);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .custom-time-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-dim);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        body.dark-theme .custom-time-inputs {
+            background: rgba(0, 0, 0, 0.35);
+            border-color: var(--border-glow);
+        }
+
+        .custom-input {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-primary);
+            padding: 0.48rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-family: var(--font-mono);
+            outline: none;
+            transition: all 0.25s;
+        }
+
+        body.dark-theme .custom-input {
+            background: var(--bg-card);
+            border-color: var(--border-glow);
+        }
+
+        .custom-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* 3D KPI Metric Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.15rem;
+            perspective: 1200px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid var(--border-dim);
+            border-radius: 16px;
+            padding: 1.35rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            transform-style: preserve-3d;
+            transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: default;
+        }
+
+        body.dark-theme .stat-card {
+            background: var(--bg-surface);
+            border-color: var(--border-dim);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.03) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2), 0 0 15px rgba(6, 182, 212, 0.15);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        body.dark-theme .stat-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.25);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0284c7, #2563eb, #7c3aed);
+        }
+
+        /* Distinct Color Palettes for Every Stat Card */
+        .stat-card:nth-child(1)::after { background: linear-gradient(90deg, #0284c7, #2563eb); }
+        .stat-card:nth-child(2)::after { background: linear-gradient(90deg, #06b6d4, #0284c7); }
+        .stat-card:nth-child(3)::after { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+        .stat-card:nth-child(4)::after { background: linear-gradient(90deg, #f59e0b, #ea580c); }
+        .stat-card:nth-child(5)::after { background: linear-gradient(90deg, #ec4899, #d946ef); }
+        .stat-card:nth-child(6)::after { background: linear-gradient(90deg, #14b8a6, #0d9488); }
+        .stat-card:nth-child(7)::after { background: linear-gradient(90deg, #f43f5e, #e11d48); }
+        .stat-card:nth-child(8)::after { background: linear-gradient(90deg, #22c55e, #16a34a); }
+
+        /* Stat Card Header, 3D Floating Icons, and Glow Badges */
+        .stat-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            transform: translateZ(20px);
+        }
+
+        .stat-icon-3d {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .stat-card:hover .stat-icon-3d {
+            transform: scale(1.15) translateZ(30px) rotate(6deg);
+        }
+
+        .stat-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0.22rem 0.65rem;
+            border-radius: 9999px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 8 Specific Color Themes */
+        .stat-card-calls {
+            background: linear-gradient(180deg, rgba(2, 132, 199, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(2, 132, 199, 0.25);
+        }
+        .stat-card-calls .stat-icon-3d {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+        .stat-card-calls .stat-badge {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+        .stat-card-calls:hover {
+            border-color: #2563eb;
+            box-shadow: 0 16px 35px -8px rgba(37, 99, 235, 0.35), 0 0 15px rgba(2, 132, 199, 0.2);
+        }
+
+        .stat-card-sms {
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(6, 182, 212, 0.25);
+        }
+        .stat-card-sms .stat-icon-3d {
+            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.35);
+        }
+        .stat-card-sms .stat-badge {
+            background: rgba(6, 182, 212, 0.12);
+            color: #0284c7;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .stat-card-sms:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 16px 35px -8px rgba(6, 182, 212, 0.35), 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .stat-card-contacts {
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(139, 92, 246, 0.25);
+        }
+        .stat-card-contacts .stat-icon-3d {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
+        }
+        .stat-card-contacts .stat-badge {
+            background: rgba(139, 92, 246, 0.12);
+            color: #7c3aed;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .stat-card-contacts:hover {
+            border-color: #7c3aed;
+            box-shadow: 0 16px 35px -8px rgba(124, 58, 237, 0.35), 0 0 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .stat-card-audio {
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+        .stat-card-audio .stat-icon-3d {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.35);
+        }
+        .stat-card-audio .stat-badge {
+            background: rgba(245, 158, 11, 0.12);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .stat-card-audio:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 16px 35px -8px rgba(245, 158, 11, 0.35), 0 0 15px rgba(234, 88, 12, 0.2);
+        }
+
+        .stat-card-images {
+            background: linear-gradient(180deg, rgba(236, 72, 153, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(236, 72, 153, 0.25);
+        }
+        .stat-card-images .stat-icon-3d {
+            background: linear-gradient(135deg, #ec4899, #d946ef);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
+        }
+        .stat-card-images .stat-badge {
+            background: rgba(236, 72, 153, 0.12);
+            color: #db2777;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+        .stat-card-images:hover {
+            border-color: #ec4899;
+            box-shadow: 0 16px 35px -8px rgba(236, 72, 153, 0.35), 0 0 15px rgba(217, 70, 239, 0.2);
+        }
+
+        .stat-card-files {
+            background: linear-gradient(180deg, rgba(20, 184, 166, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(20, 184, 166, 0.25);
+        }
+        .stat-card-files .stat-icon-3d {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35);
+        }
+        .stat-card-files .stat-badge {
+            background: rgba(20, 184, 166, 0.12);
+            color: #0d9488;
+            border: 1px solid rgba(20, 184, 166, 0.3);
+        }
+        .stat-card-files:hover {
+            border-color: #14b8a6;
+            box-shadow: 0 16px 35px -8px rgba(20, 184, 166, 0.35), 0 0 15px rgba(13, 148, 136, 0.2);
+        }
+
+        .stat-card-apps {
+            background: linear-gradient(180deg, rgba(244, 63, 94, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(244, 63, 94, 0.25);
+        }
+        .stat-card-apps .stat-icon-3d {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.35);
+        }
+        .stat-card-apps .stat-badge {
+            background: rgba(244, 63, 94, 0.12);
+            color: #e11d48;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+        }
+        .stat-card-apps:hover {
+            border-color: #f43f5e;
+            box-shadow: 0 16px 35px -8px rgba(244, 63, 94, 0.35), 0 0 15px rgba(225, 29, 72, 0.2);
+        }
+
+        .stat-card-chats {
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(34, 197, 94, 0.25);
+        }
+        .stat-card-chats .stat-icon-3d {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+        }
+        .stat-card-chats .stat-badge {
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        .stat-card-chats:hover {
+            border-color: #22c55e;
+            box-shadow: 0 16px 35px -8px rgba(34, 197, 94, 0.35), 0 0 15px rgba(22, 163, 74, 0.2);
+        }
+
+        /* Dark Theme overrides for stat cards */
+        body.dark-theme .stat-card-calls { background: linear-gradient(180deg, rgba(2, 132, 199, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(2, 132, 199, 0.35); }
+        body.dark-theme .stat-card-sms { background: linear-gradient(180deg, rgba(6, 182, 212, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(6, 182, 212, 0.35); }
+        body.dark-theme .stat-card-contacts { background: linear-gradient(180deg, rgba(139, 92, 246, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(139, 92, 246, 0.35); }
+        body.dark-theme .stat-card-audio { background: linear-gradient(180deg, rgba(245, 158, 11, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(245, 158, 11, 0.35); }
+        body.dark-theme .stat-card-images { background: linear-gradient(180deg, rgba(236, 72, 153, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(236, 72, 153, 0.35); }
+        body.dark-theme .stat-card-files { background: linear-gradient(180deg, rgba(20, 184, 166, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(20, 184, 166, 0.35); }
+        body.dark-theme .stat-card-apps { background: linear-gradient(180deg, rgba(244, 63, 94, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(244, 63, 94, 0.35); }
+        body.dark-theme .stat-card-chats { background: linear-gradient(180deg, rgba(34, 197, 94, 0.14) 0%, var(--bg-surface) 100%); border-color: rgba(34, 197, 94, 0.35); }
+
+        /* Specific Sidebar Tab Colorful Icon Badges */
+        .tab-icon-calls { background: linear-gradient(135deg, #0284c7, #2563eb) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important; }
+        .tab-icon-images { background: linear-gradient(135deg, #ec4899, #d946ef) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(236, 72, 153, 0.35) !important; }
+        .tab-icon-audio { background: linear-gradient(135deg, #f59e0b, #ea580c) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.35) !important; }
+        .tab-icon-sms { background: linear-gradient(135deg, #06b6d4, #0284c7) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(6, 182, 212, 0.35) !important; }
+        .tab-icon-contacts { background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35) !important; }
+        .tab-icon-files { background: linear-gradient(135deg, #14b8a6, #0d9488) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(20, 184, 166, 0.35) !important; }
+        .tab-icon-apps { background: linear-gradient(135deg, #f43f5e, #e11d48) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.35) !important; }
+        .tab-icon-chats { background: linear-gradient(135deg, #22c55e, #16a34a) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.35) !important; }
+        .tab-icon-analytics { background: linear-gradient(135deg, #6366f1, #4f46e5) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.35) !important; }
+        .tab-icon-specs { background: linear-gradient(135deg, #64748b, #475569) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.35) !important; }
+
+        .stat-title {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+        }
+
+        .stat-value {
+            font-size: 1.95rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            transform: translateZ(20px);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-sub {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Toolbar & Search Controls */
+        .toolbar {
+            background: #ffffff;
+            border: 1px solid var(--border-dim);
+            border-radius: 16px;
+            padding: 1.1rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+            transform-style: preserve-3d;
+        }
+
+        body.dark-theme .toolbar {
+            background: var(--bg-surface);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .search-input {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-primary);
+            padding: 0.68rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: all 0.25s;
+            flex: 1;
+            min-width: 320px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        body.dark-theme .search-input {
+            background: var(--bg-card);
+            border-color: var(--border-glow);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            transform: scale(1.01);
+        }
+
+        /* 3D Filter Pills */
+        .pills-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pill-btn {
+            background: #ffffff;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
+            padding: 0.48rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+        }
+
+        body.dark-theme .pill-btn {
+            background: var(--bg-card);
+            border-color: var(--border-dim);
+        }
+
+        .pill-btn:hover {
+            color: var(--text-primary);
+            border-color: #94a3b8;
+            background: #f8fafc;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .pill-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 3px 12px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .pill-btn.deleted-pill {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
+        }
+
+        .pill-btn.deleted-pill.active {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.45);
+        }
+
+        /* 3D Tables with Depth */
+        .table-wrapper {
+            background: #ffffff;
+            border: 1px solid var(--border-dim);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            perspective: 1000px;
+        }
+
+        body.dark-theme .table-wrapper {
+            background: var(--bg-surface);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+
+        thead {
+            background: linear-gradient(90deg, #f8fafc, #f1f5f9);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 2px solid var(--border-dim);
+            font-weight: 800;
+        }
+
+        body.dark-theme thead {
+            background: var(--bg-card);
+            border-color: var(--border-glow);
+        }
+
+        th, td {
+            padding: 1rem 1.3rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.dark-theme tbody tr {
+            border-bottom-color: rgba(255, 255, 255, 0.035);
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.04), rgba(124, 58, 237, 0.02));
+            transform: translateX(4px);
+        }
+
+        body.dark-theme tbody tr:hover {
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .contact-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .avatar:hover {
+            transform: scale(1.15) rotate(8deg);
+        }
+
+        /* Saturated Glowing Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-incoming {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(5, 150, 105, 0.14));
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.45);
+        }
+        body.dark-theme .badge-incoming { color: #34d399; }
+
+        .badge-outgoing {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(79, 70, 229, 0.14));
+            color: #2563eb;
+            border: 1px solid rgba(37, 99, 235, 0.45);
+        }
+        body.dark-theme .badge-outgoing { color: #60a5fa; }
+
+        .badge-missed {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.18), rgba(225, 29, 72, 0.14));
+            color: #e11d48;
+            border: 1px solid rgba(244, 63, 94, 0.45);
+        }
+        body.dark-theme .badge-missed { color: #fb7185; }
+
+        .badge-deleted {
+            background: linear-gradient(135deg, #f43f5e, #be123c);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.45);
+            animation: pulseGlow3D 2.5s infinite;
+        }
+
+        .badge-active {
+            background: rgba(148, 163, 184, 0.14);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-dim);
+        }
+
+        .badge-bank {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(20, 184, 166, 0.18));
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+        }
+        body.dark-theme .badge-bank { color: #6ee7b7; }
+
+        .badge-otp {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(234, 88, 12, 0.18));
+            color: #b45309;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+        }
+        body.dark-theme .badge-otp { color: #fcd34d; }
+
+        .badge-spam {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.22), rgba(225, 29, 72, 0.18));
+            color: #e11d48;
+            border: 1px solid rgba(244, 63, 94, 0.45);
+        }
+        body.dark-theme .badge-spam { color: #fda4af; }
+
+        .badge-personal {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(217, 70, 239, 0.18));
+            color: #7c3aed;
+            border: 1px solid rgba(139, 92, 246, 0.45);
+            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.15);
+        }
+        body.dark-theme .badge-personal { color: #d8b4fe; }
+
+        /* 3D Media Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.35rem;
+            perspective: 1200px;
+        }
+
+        .media-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .media-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-8px) scale(1.03) rotateX(3deg);
+            box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.15), 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+
+        body.dark-theme .media-card:hover {
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 182, 212, 0.35);
+        }
+
+        .media-thumb {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #000;
+            cursor: pointer;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .media-thumb:hover {
+            transform: scale(1.06);
+        }
+
+        .media-card-body {
+            padding: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            background: var(--bg-surface);
+        }
+
+        .media-title {
+            font-size: 0.78rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .media-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        /* Audio Recordings */
+        .audio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+        }
+
+        .audio-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 14px;
+            padding: 1.15rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.2s;
+        }
+
+        .audio-card:hover {
+            border-color: var(--border-glow);
+        }
+
+        .audio-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+            min-width: 260px;
+        }
+
+        .audio-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        audio {
+            flex: 1;
+            min-width: 280px;
+            height: 40px;
+            outline: none;
+        }
+
+        /* Lightbox Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(14px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-dim);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-dim);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+        }
+
+        /* Analytics Visual Charts */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chart-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chart-bar-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 10px;
+            background: var(--bg-card);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 9999px;
+        }
+
+        /* Empty State Placeholder */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .app-body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: static; }
+            .side-menu { flex-direction: row; overflow-x: auto; }
+            .side-tab-btn { white-space: nowrap; }
+            .main-content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Security & Case Integrity Banner -->
+    <div class="case-banner">
+        <span>CASE EVIDENCE RECORD: <strong>FOR-2026-X89</strong> | INTEGRITY: <strong>NIST/FIPS SHA-256 VERIFIED</strong></span>
+        <span>SECURITY LEVEL: <strong>CONFIDENTIAL / FORENSIC PRESERVATION</strong></span>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="brand-container">
+            <div class="brand-logo">🛡️</div>
+            <div class="brand-text">
+                <h1>AegisForensic AI Intelligence Studio</h1>
+                <span>Commercial Phone Forensics & Multi-Vector Recovery</span>
+            </div>
+        </div>
+
+        <div class="device-hud" id="deviceHud">
+            <div class="status-pill">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="deviceStatusText">Checking USB status...</span>
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;" id="deviceSpecsQuick">Model: -- | Android --</div>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn" onclick="toggleTheme()" id="themeToggleBtn" title="Toggle Light / Dark Theme">
+                <span>☀️ Bright Mode</span>
+            </button>
+            <button class="btn btn-primary" onclick="triggerRecovery()" id="scanBtn">
+                <span>⚡ Run Full Forensic Acquisition</span>
+            </button>
+            <a class="btn" href="/api/export/bundle" title="Download all recovered evidence in a master ZIP archive">
+                <span>📦 Export Case ZIP</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- App Body: Sidebar + Main Content -->
+    <div class="app-body">
+
+        <!-- VERTICAL FORENSIC SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-section-label">FORENSIC ARTIFACTS</div>
+                <div class="side-menu">
+                    <button class="side-tab-btn active" onclick="switchSideTab('calls')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-calls">📞</span>
+                            <span>Calls & Deleted</span>
+                        </div>
+                        <span class="side-badge" id="badgeCalls">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('images')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-images">🖼️</span>
+                            <span>Image Vault</span>
+                        </div>
+                        <span class="side-badge" id="badgeImages">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('audio')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-audio">🎙️</span>
+                            <span>Call Recordings</span>
+                        </div>
+                        <span class="side-badge" id="badgeAudio">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('sms')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-sms">💬</span>
+                            <span>SMS & Messages</span>
+                        </div>
+                        <span class="side-badge" id="badgeSMS">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('contacts')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-contacts">👥</span>
+                            <span>Contacts Book</span>
+                        </div>
+                        <span class="side-badge" id="badgeContacts">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('files')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-files">📁</span>
+                            <span>Files & Documents</span>
+                        </div>
+                        <span class="side-badge" id="badgeFiles">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('apps')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-apps">📱</span>
+                            <span>App Audit & Residue</span>
+                        </div>
+                        <span class="side-badge" id="badgeApps">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('chats')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-chats">🔐</span>
+                            <span>App Chats & Vault</span>
+                        </div>
+                        <span class="side-badge" id="badgeChats">0</span>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('analytics')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-analytics">📊</span>
+                            <span>Intelligence</span>
+                        </div>
+                    </button>
+
+                    <button class="side-tab-btn" onclick="switchSideTab('specs')">
+                        <div class="tab-label">
+                            <span class="tab-icon tab-icon-specs">⚙️</span>
+                            <span>Device Specs</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-actions">
+                <a class="btn btn-sm btn-accent" style="width: 100%; justify-content: center;" href="/api/contacts/export/vcf">
+                    <span>📥 Export .VCF Contacts</span>
+                </a>
+                <a class="btn btn-sm" style="width: 100%; justify-content: center;" href="/api/export/bundle">
+                    <span>📦 Master Case Archive</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN WORKSPACE -->
+        <div class="main-content">
+
+            <!-- HIGH-VISIBILITY TIMEFRAME PANEL -->
+            <div class="timeframe-panel">
+                <div class="timeframe-header">
+                    <div class="timeframe-title">
+                        <span>🗓️ Timeframe & Historical Window</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: none; font-weight: 500;">(Defaults to 1 Month • Select preset or enter custom limits)</span>
+                    </div>
+                    <div class="timeframe-active-badge" id="activeTimeframeBadge">
+                        Active Timeframe: Last 1 Month
+                    </div>
+                </div>
+
+                <div class="timeframe-controls">
+                    <!-- Preset Buttons -->
+                    <div class="preset-buttons" id="timePresets">
+                        <button class="time-btn active" onclick="selectPresetMonths(1)">1 Month (Default)</button>
+                        <button class="time-btn" onclick="selectPresetMonths(3)">3 Months</button>
+                        <button class="time-btn" onclick="selectPresetMonths(6)">6 Months</button>
+                        <button class="time-btn" onclick="selectPresetMonths(12)">1 Year (12 Mo)</button>
+                        <button class="time-btn" onclick="selectPresetMonths(24)">2 Years (24 Mo)</button>
+                        <button class="time-btn" onclick="selectPresetMonths(999)">All Time History</button>
+                    </div>
+
+                    <!-- Custom User Limit Controls with Clear Placeholders -->
+                    <div class="custom-time-inputs">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600;">Custom Mo:</span>
+                        <input type="number" id="customMonthsInput" class="custom-input" style="width: 75px;" min="1" max="120" placeholder="e.g. 5">
+                        <button class="btn btn-sm btn-accent" onclick="applyCustomMonths()">Apply</button>
+                        
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; margin-left: 0.5rem;">Date Range:</span>
+                        <input type="date" id="customStartDate" class="custom-input" title="Start Date (YYYY-MM-DD)">
+                        <span style="color: var(--text-muted);">to</span>
+                        <input type="date" id="customEndDate" class="custom-input" title="End Date (YYYY-MM-DD)">
+                        <button class="btn btn-sm btn-primary" onclick="applyCustomDateRange()">Filter Range</button>
+                        <button class="btn btn-sm" onclick="clearCustomRange()">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Metric Cards Grid -->
+            <div class="stats-grid">
+                <div class="stat-card stat-card-calls">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">📞</div>
+                        <span class="stat-badge">LIVE FORENSIC</span>
+                    </div>
+                    <span class="stat-title">Calls in Selected Timeframe</span>
+                    <span class="stat-value" id="statCalls">0</span>
+                    <span class="stat-sub" id="statDeleted">0 Deleted traces carved</span>
+                </div>
+
+                <div class="stat-card stat-card-sms">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">💬</div>
+                        <span class="stat-badge">CARVED SMS</span>
+                    </div>
+                    <span class="stat-title">SMS Messages</span>
+                    <span class="stat-value" id="statSMS">0</span>
+                    <span class="stat-sub" id="statSMSCategories">0 Financial / OTP tokens</span>
+                </div>
+
+                <div class="stat-card stat-card-contacts">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">👥</div>
+                        <span class="stat-badge">CONTACTS</span>
+                    </div>
+                    <span class="stat-title">Address Book Contacts</span>
+                    <span class="stat-value" id="statContacts">0</span>
+                    <span class="stat-sub">Exportable as Universal .VCF</span>
+                </div>
+
+                <div class="stat-card stat-card-audio">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">🎙️</div>
+                        <span class="stat-badge">VOICE RECORDINGS</span>
+                    </div>
+                    <span class="stat-title">Call Recordings</span>
+                    <span class="stat-value" id="statAudio">0</span>
+                    <span class="stat-sub">47 Conversations in /sdcard/Call/</span>
+                </div>
+
+                <div class="stat-card stat-card-images">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">🖼️</div>
+                        <span class="stat-badge">AI ENHANCED</span>
+                    </div>
+                    <span class="stat-title">Images & Thumbnails</span>
+                    <span class="stat-value" id="statImages">0</span>
+                    <span class="stat-sub" id="statEnhanced">0 AI Super-Resolved</span>
+                </div>
+
+                <div class="stat-card stat-card-files">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">📁</div>
+                        <span class="stat-badge">FILE CARVER</span>
+                    </div>
+                    <span class="stat-title">Recovered Files & Docs</span>
+                    <span class="stat-value" id="statFiles">0</span>
+                    <span class="stat-sub" id="statFilesSub">PDF, Office, APK & Archives</span>
+                </div>
+
+                <div class="stat-card stat-card-apps">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">📱</div>
+                        <span class="stat-badge">APP RESIDUE</span>
+                    </div>
+                    <span class="stat-title">Apps & Residual Traces</span>
+                    <span class="stat-value" id="statApps">0</span>
+                    <span class="stat-sub" id="statAppsSub">Installed & Uninstalled Residue</span>
+                </div>
+
+                <div class="stat-card stat-card-chats">
+                    <div class="stat-card-header">
+                        <div class="stat-icon-3d">🔐</div>
+                        <span class="stat-badge">CHAT VAULT</span>
+                    </div>
+                    <span class="stat-title">App Chats & Databases</span>
+                    <span class="stat-value" id="statChats">0</span>
+                    <span class="stat-sub" id="statChatsSub">WhatsApp Crypt14 & Voice Notes</span>
+                </div>
+            </div>
+
+            <!-- TAB 1: CALLS & DELETED LOGS -->
+            <div id="tab-calls">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="callSearchInput" placeholder="🔍 Search by phone number (e.g. +918220...), contact name (e.g. Vinoth, Appa), or date..." oninput="renderCalls()">
+                    </div>
+
+                    <div class="pills-container" id="categoryPills">
+                        <button class="pill-btn deleted-pill" onclick="filterCallsByCategory('Deleted / Forensic Trace')">🚨 DELETED CALLS ONLY</button>
+                        <button class="pill-btn active" onclick="filterCallsByCategory('all')">All Calls</button>
+                        <button class="pill-btn" onclick="filterCallsByCategory('Frequent Contact')">Frequent Contacts</button>
+                        <button class="pill-btn" onclick="filterCallsByCategory('Unknown Number')">Unknown Numbers</button>
+                        <button class="pill-btn" onclick="filterCallsByCategory('Missed / Unanswered')">Missed</button>
+                        <button class="pill-btn" onclick="filterCallsByCategory('Long Call (>10m)')">Long Calls (>10m)</button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Caller Identity</th>
+                                <th>Timestamp</th>
+                                <th>Duration</th>
+                                <th>Direction</th>
+                                <th>Forensic Status</th>
+                                <th>Evidence Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="callsTableBody">
+                            <tr><td colspan="6" class="empty-state">Loading call logs...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 2: IMAGE & MEDIA VAULT (With Individual Download Option) -->
+            <div id="tab-images" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="imageSearchInput" placeholder="🔍 Filter images by filename (e.g. 17864... or .png)..." oninput="filterImages()">
+                        <button class="btn btn-accent btn-sm" onclick="downloadSelectedImages()">
+                            <span>⬇️ Download Selected as ZIP</span>
+                        </button>
+                        <button class="btn btn-sm" onclick="toggleSelectAllImages()">
+                            <span>Select All</span>
+                        </button>
+                    </div>
+                    <div class="pills-container">
+                        <button class="pill-btn active" onclick="filterImageCategory('all')">All Media (<span id="countAllImgs">0</span>)</button>
+                        <button class="pill-btn" onclick="filterImageCategory('enhanced')">✨ AI Super-Resolved (<span id="countEnhImgs">0</span>)</button>
+                        <button class="pill-btn" onclick="filterImageCategory('carved')">🔍 Carved Thumbnails</button>
+                    </div>
+                </div>
+
+                <div class="gallery-grid" id="imageGalleryContainer">
+                    <div class="empty-state" style="grid-column: 1 / -1;">No images loaded yet.</div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CALL RECORDINGS (With Individual Audio Download) -->
+            <div id="tab-audio" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="audioSearchInput" placeholder="🔍 Search caller name, number, or recording title (e.g. Appa, Mano, Vinoth)..." oninput="renderAudio()">
+                    </div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">
+                        Extracted from local device storage (<code style="font-family: var(--font-mono); color: var(--accent-cyan);">/sdcard/Call/</code>). Click ⬇️ Download on any recording.
+                    </span>
+                </div>
+
+                <div class="audio-list" id="audioListContainer">
+                    <div class="empty-state">No call recordings found or extracted yet.</div>
+                </div>
+            </div>
+
+            <!-- TAB 4: SMS MESSAGES -->
+            <div id="tab-sms" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="smsSearchInput" placeholder="🔍 Search SMS text, bank debits/credits, OTP codes, or sender ID (e.g. HDFC, Google)..." oninput="renderSMS()">
+                    </div>
+                    <div class="pills-container">
+                        <button class="pill-btn active" onclick="filterSMSCategory('all')">All Messages</button>
+                        <button class="pill-btn" onclick="filterSMSCategory('Bank & Financial')">🏦 Bank & Financial</button>
+                        <button class="pill-btn" onclick="filterSMSCategory('OTP / Verification')">🔐 OTPs / Verification</button>
+                        <button class="pill-btn" onclick="filterSMSCategory('Personal')">👤 Personal</button>
+                        <button class="pill-btn" onclick="filterSMSCategory('Spam / Promo')">📢 Spam & Promo</button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sender / Number</th>
+                                <th>Message Content</th>
+                                <th>Timestamp</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="smsTableBody">
+                            <tr><td colspan="5" class="empty-state">No SMS messages loaded.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 5: CONTACTS BOOK -->
+            <div id="tab-contacts" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="contactsSearchInput" placeholder="🔍 Search contacts by name or phone number..." oninput="renderContacts()">
+                    </div>
+                    <div>
+                        <a class="btn btn-primary" href="/api/contacts/export/vcf">
+                            <span>📥 Download Universal .VCF (vCard)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Contact Name</th>
+                                <th>Phone Number</th>
+                                <th>Source</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contactsTableBody">
+                            <tr><td colspan="3" class="empty-state">No contacts loaded.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 6: RECOVERED FILES & DOCUMENTS -->
+            <div id="tab-files" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="fileSearchInput" placeholder="🔍 Search document name (e.g. TC, mark sheet, patent, loan, resume, .pdf, .docx, .apk)..." oninput="renderFiles()">
+                    </div>
+                    <div class="pills-container" id="fileCategoryPills">
+                        <button class="pill-btn active" onclick="filterFileCategory('all')">All Files (<span id="countAllFiles">0</span>)</button>
+                        <button class="pill-btn" onclick="filterFileCategory('pdf')">📄 PDF Documents</button>
+                        <button class="pill-btn" onclick="filterFileCategory('word')">📝 Word & Office</button>
+                        <button class="pill-btn" onclick="filterFileCategory('apk')">📦 Android APKs</button>
+                        <button class="pill-btn" onclick="filterFileCategory('archive')">🗜️ ZIP / Archives</button>
+                        <button class="pill-btn" onclick="filterFileCategory('carved')">🔍 Carved / Deleted Fragments</button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>File Name & Classification</th>
+                                <th>Category</th>
+                                <th>File Size</th>
+                                <th>Last Modified</th>
+                                <th>Forensic Status & Hash</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filesTableBody">
+                            <tr><td colspan="6" class="empty-state">Loading recovered documents...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 7: APP AUDIT & UNINSTALLED RESIDUE -->
+            <div id="tab-apps" style="display: none;">
+                <div class="toolbar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <input type="text" class="search-input" id="appSearchInput" placeholder="🔍 Search application name or package (e.g. WhatsApp, Truecaller, PhonePe, Claude)..." oninput="renderApps()">
+                    </div>
+                    <div class="pills-container" id="appCategoryPills">
+                        <button class="pill-btn active" onclick="filterAppCategory('all')">All Apps (<span id="countTotalApps">0</span>)</button>
+                        <button class="pill-btn" onclick="filterAppCategory('installed')">Installed 3rd-Party (<span id="countInstalledApps">0</span>)</button>
+                        <button class="pill-btn deleted-pill" onclick="filterAppCategory('uninstalled')">🚨 Uninstalled / Deleted Residue (<span id="countUninstalledApps">0</span>)</button>
+                    </div>
+                </div>
+
+                <!-- Uninstalled Residue Alert Banner -->
+                <div id="uninstalledAppNotice" style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35); border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: #fda4af; font-size: 0.95rem;">🚨 Uninstalled Application Residue Detected</strong>
+                        <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 3px;">
+                            Lingering application directories were identified in shared storage from apps that were previously uninstalled by the user.
+                        </div>
+                    </div>
+                    <span class="badge badge-deleted" id="uninstalledResidueCountBadge">0 Residues</span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Application Identity</th>
+                                <th>Package Name</th>
+                                <th>Version</th>
+                                <th>Install / Activity Date</th>
+                                <th>Category / Forensic Risk</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appsTableBody">
+                            <tr><td colspan="6" class="empty-state">Loading application inventory...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 8: APP CHATS & VAULT -->
+            <div id="tab-chats" style="display: none;">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <!-- WhatsApp Encrypted Databases Section -->
+                    <div class="chart-card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.1rem; color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>🔐 WhatsApp Database Vault</span>
+                                    <span class="badge badge-personal">End-to-End Crypt14 / Crypt15 Backups</span>
+                                </h3>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
+                                    Full conversation message stores extracted from <code style="font-family: var(--font-mono); color: var(--accent-cyan);">/sdcard/Android/media/com.whatsapp/WhatsApp/Databases/</code>. Click Download to extract and inspect locally.
+                                </p>
+                            </div>
+                            <span class="badge badge-bank" id="chatDbCountBadge">0 Databases Available</span>
+                        </div>
+
+                        <div id="waDatabasesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                            <!-- Dynamically loaded DB cards -->
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Voice Notes Audio Player Section -->
+                    <div class="chart-card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.1rem; color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>🎙️ WhatsApp Voice Notes (PTT Recordings)</span>
+                                </h3>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
+                                    Audio voice messages sent and received on WhatsApp. Play directly or download individual audio tracks.
+                                </p>
+                            </div>
+                            <span class="badge" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;" id="chatVnCountBadge">0 Voice Notes</span>
+                        </div>
+
+                        <div class="audio-list" id="waVoiceNotesList" style="margin-top: 1rem;">
+                            <div class="empty-state">No voice notes extracted yet.</div>
+                        </div>
+                    </div>
+
+                    <!-- Telegram Messenger Artifacts Section -->
+                    <div class="chart-card">
+                        <h3 style="font-size: 1.1rem; color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>✈️ Telegram Messenger Forensic Remnants</span>
+                        </h3>
+                        <div id="telegramStatusBox" style="margin-top: 0.85rem; padding: 1rem; background: var(--bg-card); border-radius: 10px; border: 1px solid var(--border-dim); font-size: 0.88rem;">
+                            Checking Telegram artifacts...
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Statuses Cache -->
+                    <div class="chart-card">
+                        <h3 style="font-size: 1.1rem; color: #38bdf8; font-weight: 700;">
+                            <span>📸 WhatsApp Stories & Statuses Cache</span>
+                        </h3>
+                        <div class="gallery-grid" id="waStatusesGallery" style="margin-top: 1rem;">
+                            <!-- Statuses -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TAB 9: FORENSIC INTELLIGENCE ANALYTICS -->
+            <div id="tab-analytics" style="display: none;">
+                <div class="analytics-grid">
+                    <div class="chart-card">
+                        <h3 style="font-size: 1rem; color: var(--text-primary); font-weight: 700;">📊 Call Direction Distribution</h3>
+                        <div id="analyticsDirectionBars" style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.5rem;">
+                            <!-- Dynamically filled -->
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3 style="font-size: 1rem; color: var(--text-primary); font-weight: 700;">👥 Top Communicated Contacts</h3>
+                        <div id="analyticsTopContacts" style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.5rem;">
+                            <!-- Dynamically filled -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: DEVICE TELEMETRY -->
+            <div id="tab-specs" style="display: none;">
+                <div class="stats-grid" id="deviceSpecsContainer">
+                    <div class="stat-card"><span class="stat-title">Device Model</span><span class="stat-value" style="font-size: 1.3rem;" id="specModel">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Manufacturer</span><span class="stat-value" style="font-size: 1.3rem;" id="specManufacturer">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Android OS</span><span class="stat-value" style="font-size: 1.3rem;" id="specAndroid">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Battery Status</span><span class="stat-value" style="font-size: 1.3rem;" id="specBattery">--</span></div>
+                    <div class="stat-card"><span class="stat-title">SIM Carrier</span><span class="stat-value" style="font-size: 1.3rem;" id="specCarrier">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Root Privileges</span><span class="stat-value" style="font-size: 1.3rem;" id="specRoot">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Internal Storage</span><span class="stat-value" style="font-size: 1.3rem;" id="specStorage">--</span></div>
+                    <div class="stat-card"><span class="stat-title">Display Resolution</span><span class="stat-value" style="font-size: 1.3rem;" id="specResolution">--</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Interactive Lightbox Modal with Individual Download Button -->
+    <div class="modal-overlay" id="lightboxModal" onclick="closeLightbox(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div>
+                    <strong style="color: var(--text-primary);" id="modalImgTitle">Image Inspector</strong>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);" id="modalImgDims">--</div>
+                </div>
+                <button class="btn btn-sm" onclick="closeLightbox(event)">✕ Close</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImgPreview" src="" alt="Forensic Preview" />
+            </div>
+            <div class="modal-footer">
+                <div style="font-size: 0.8rem; color: var(--text-secondary);" id="modalImgMeta">
+                    Integrity: SHA-256 Carved File
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <a class="btn btn-primary" id="modalDownloadBtn" href="" download>
+                        <span>⬇️ Download Image</span>
+                    </a>
+                    <button class="btn btn-delete" id="modalDeleteBtn" onclick="deleteCurrentLightboxImage()">
+                        <span>🗑️ Delete Image</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Engine (Bright Light Theme default)
+        function initTheme() {
+            const saved = localStorage.getItem('aegis_theme') || 'light';
+            const btn = document.getElementById('themeToggleBtn');
+            if (saved === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (btn) btn.innerHTML = '<span>🌙 Dark Theme</span>';
+            } else {
+                document.body.classList.remove('dark-theme');
+                if (btn) btn.innerHTML = '<span>☀️ Bright Mode</span>';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('aegis_theme', isDark ? 'dark' : 'light');
+            const btn = document.getElementById('themeToggleBtn');
+            if (btn) {
+                btn.innerHTML = isDark ? '<span>🌙 Dark Theme</span>' : '<span>☀️ Bright Mode</span>';
+            }
+        }
+        initTheme();
+
+        let currentTab = 'calls';
+        let allCallsMaster = [];
+        let allCallsAnalytics = {};
+        let currentCalls = [];
+        let currentSMS = [];
+        let currentContacts = [];
+        let currentAudio = [];
+        let rawImagesData = { images: [], enhanced: [] };
+        let selectedCategory = 'all';
+        let selectedSMSCategory = 'all';
+        let selectedImageCategory = 'all';
+        let selectedImageFilenames = new Set();
+        let currentLightboxFilename = '';
+        
+        // Timeframe State
+        let activeMonths = 1;
+        let activeStartDate = null;
+        let activeEndDate = null;
+
+        // Check device status
+        async function checkDeviceStatus() {
+            try {
+                const res = await fetch('/api/device/status');
+                const data = await res.json();
+                const dot = document.getElementById('statusDot');
+                const text = document.getElementById('deviceStatusText');
+                const quick = document.getElementById('deviceSpecsQuick');
+
+                if (data.connected) {
+                    dot.className = 'status-dot online';
+                    text.textContent = `${data.device_info.manufacturer || ''} ${data.device_info.model || 'Phone'} Connected`;
+                    quick.textContent = `Android ${data.device_info.android_version || ''} | Serial: ${data.serial}`;
+                } else if (data.status === 'code_43') {
+                    dot.className = 'status-dot error';
+                    text.textContent = 'USB Hardware Code 43';
+                    quick.textContent = 'Change USB cable or port';
+                } else {
+                    dot.className = 'status-dot';
+                    text.textContent = 'Device Disconnected';
+                    quick.textContent = 'Plug in phone over USB';
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function fetchDeviceDetails() {
+            try {
+                const res = await fetch('/api/device/details');
+                const data = await res.json();
+                if (data.details) {
+                    const d = data.details;
+                    document.getElementById('specModel').textContent = d.model || '--';
+                    document.getElementById('specManufacturer').textContent = d.manufacturer || '--';
+                    document.getElementById('specAndroid').textContent = d.android_version || '--';
+                    document.getElementById('specBattery').textContent = `${d.battery_level || '--'} (${d.battery_status || ''})`;
+                    document.getElementById('specCarrier').textContent = d.carrier || '--';
+                    document.getElementById('specRoot').textContent = d.root_status || '--';
+                    document.getElementById('specStorage').textContent = d.storage_internal || '--';
+                    document.getElementById('specResolution').textContent = d.resolution || '--';
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Interactive 3D Card Hover & Kinetic Tilt
+        function init3DTiltEffects() {
+            const tiltElements = document.querySelectorAll('.stat-card, .media-card, .audio-card, .chart-card');
+            tiltElements.forEach(el => {
+                el.onmousemove = e => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    el.style.transform = `perspective(800px) translateY(-8px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(1.025)`;
+                };
+                el.onmouseleave = () => {
+                    el.style.transform = '';
+                };
+            });
+        }
+
+        // SIDEBAR TAB SWITCHING WITH 3D ANIMATION
+        function switchSideTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.side-tab-btn').forEach(b => b.classList.remove('active'));
+            ['calls', 'images', 'audio', 'sms', 'contacts', 'files', 'apps', 'chats', 'analytics', 'specs'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) {
+                    if (t === tab) {
+                        el.style.display = 'block';
+                        el.classList.remove('tab-pane');
+                        void el.offsetWidth; // Force CSS reflow for 3D entrance animation
+                        el.classList.add('tab-pane');
+                    } else {
+                        el.style.display = 'none';
+                    }
+                }
+            });
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            }
+
+            if (tab === 'calls') loadCalls();
+            if (tab === 'images') loadImages();
+            if (tab === 'audio') loadAudio();
+            if (tab === 'sms') loadSMS();
+            if (tab === 'contacts') loadContacts();
+            if (tab === 'files') loadFiles();
+            if (tab === 'apps') loadApps();
+            if (tab === 'chats') loadChats();
+            if (tab === 'analytics') renderAnalytics();
+            if (tab === 'specs') fetchDeviceDetails();
+
+            setTimeout(init3DTiltEffects, 250);
+        }
+
+        // Timeframe Selection Logic (Instant Client-side Cache)
+        function selectPresetMonths(months) {
+            activeMonths = months;
+            activeStartDate = null;
+            activeEndDate = null;
+            document.getElementById('customMonthsInput').value = '';
+            document.getElementById('customStartDate').value = '';
+            document.getElementById('customEndDate').value = '';
+
+            document.querySelectorAll('#timePresets .time-btn').forEach(b => b.classList.remove('active'));
+            if (window.event && window.event.currentTarget) window.event.currentTarget.classList.add('active');
+
+            const label = months === 999 ? 'All Time History' : (months === 1 ? 'Last 1 Month' : `Last ${months} Months`);
+            document.getElementById('activeTimeframeBadge').textContent = `Active Timeframe: ${label}`;
+
+            filterCallsLocally();
+        }
+
+        function applyCustomMonths() {
+            const val = parseInt(document.getElementById('customMonthsInput').value);
+            if (!val || val <= 0) {
+                alert('Please enter a valid number of months (e.g., 4 or 18).');
+                return;
+            }
+            activeMonths = val;
+            activeStartDate = null;
+            activeEndDate = null;
+
+            document.querySelectorAll('#timePresets .time-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('activeTimeframeBadge').textContent = `Active Timeframe: Last ${val} Months (Custom)`;
+
+            filterCallsLocally();
+        }
+
+        function applyCustomDateRange() {
+            const s = document.getElementById('customStartDate').value;
+            const e = document.getElementById('customEndDate').value;
+            if (!s && !e) {
+                alert('Please select a start date or end date.');
+                return;
+            }
+            activeStartDate = s;
+            activeEndDate = e;
+
+            document.querySelectorAll('#timePresets .time-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('activeTimeframeBadge').textContent = `Date Range: ${s || 'Start'} to ${e || 'Now'}`;
+
+            filterCallsLocally();
+        }
+
+        function clearCustomRange() {
+            document.getElementById('customStartDate').value = '';
+            document.getElementById('customEndDate').value = '';
+            document.getElementById('customMonthsInput').value = '';
+            selectPresetMonths(1);
+        }
+
+        // Fast In-Memory Calls Caching & Filtering
+        async function loadCalls(forceFetch = false) {
+            if (allCallsMaster.length === 0 || forceFetch) {
+                try {
+                    const res = await fetch('/api/logs?months=999');
+                    const data = await res.json();
+                    allCallsMaster = data.logs || [];
+                    allCallsAnalytics = data.analytics || {};
+                } catch (e) {
+                    console.error('Failed to load call logs:', e);
+                }
+            }
+            filterCallsLocally();
+        }
+
+        function filterCallsByCategory(cat) {
+            selectedCategory = cat;
+            document.querySelectorAll('#categoryPills .pill-btn').forEach(b => b.classList.remove('active'));
+            if (window.event && window.event.currentTarget) window.event.currentTarget.classList.add('active');
+            filterCallsLocally();
+        }
+
+        function filterCallsLocally() {
+            let list = allCallsMaster || [];
+
+            // 1. Timeframe filtering
+            if (activeStartDate || activeEndDate) {
+                let startTs = activeStartDate ? new Date(activeStartDate + 'T00:00:00').getTime() : 0;
+                let endTs = activeEndDate ? new Date(activeEndDate + 'T23:59:59').getTime() : Infinity;
+                list = list.filter(c => {
+                    let ts = (c.timestamp_raw && c.timestamp_raw > 0) ? (c.timestamp_raw > 1e11 ? c.timestamp_raw : c.timestamp_raw * 1000) : (c.date ? new Date(c.date.replace(' ', 'T')).getTime() : 0);
+                    return (!ts || (ts >= startTs && ts <= endTs));
+                });
+            } else if (activeMonths && activeMonths > 0 && activeMonths < 999) {
+                let maxTs = 0;
+                for (let c of allCallsMaster) {
+                    let ts = (c.timestamp_raw && c.timestamp_raw > 0) ? (c.timestamp_raw > 1e11 ? c.timestamp_raw : c.timestamp_raw * 1000) : (c.date ? new Date(c.date.replace(' ', 'T')).getTime() : 0);
+                    if (ts > maxTs) maxTs = ts;
+                }
+                if (maxTs === 0) maxTs = Date.now();
+                let minTs = maxTs - (activeMonths * 30 * 24 * 3600 * 1000);
+
+                list = list.filter(c => {
+                    let ts = (c.timestamp_raw && c.timestamp_raw > 0) ? (c.timestamp_raw > 1e11 ? c.timestamp_raw : c.timestamp_raw * 1000) : (c.date ? new Date(c.date.replace(' ', 'T')).getTime() : 0);
+                    if (ts && ts >= minTs) return true;
+                    const isDel = (c.status || '').includes('Deleted') || (c.status || '').includes('Buffer') || (c.status || '').includes('Carved');
+                    return isDel;
+                });
+            }
+
+            // 2. Category filtering
+            if (selectedCategory && selectedCategory !== 'all') {
+                if (selectedCategory === 'Deleted / Forensic Trace') {
+                    list = list.filter(c => (c.tags || []).includes('Deleted / Forensic Trace') || (c.status || '').includes('Deleted') || (c.status || '').includes('Buffer') || (c.status || '').includes('Carved'));
+                } else {
+                    list = list.filter(c => (c.tags || []).includes(selectedCategory));
+                }
+            }
+
+            currentCalls = list;
+
+            const delCount = allCallsMaster.filter(c => (c.tags || []).includes('Deleted / Forensic Trace') || (c.status || '').includes('Deleted') || (c.status || '').includes('Buffer') || (c.status || '').includes('Carved')).length;
+            document.getElementById('statCalls').textContent = currentCalls.length;
+            document.getElementById('statDeleted').textContent = `${delCount} Deleted traces carved`;
+            document.getElementById('badgeCalls').textContent = currentCalls.length;
+
+            renderCalls();
+        }
+
+        function renderCalls() {
+            const tbody = document.getElementById('callsTableBody');
+            const search = (document.getElementById('callSearchInput').value || '').toLowerCase();
+
+            const filtered = currentCalls.filter(c => {
+                return (c.number || '').toLowerCase().includes(search) || 
+                       (c.name || '').toLowerCase().includes(search) || 
+                       (c.date || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><h3>No records found in this timeframe</h3><p>Try switching to 3 Months, 6 Months, or 'All Time History'.</p></td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((c, index) => {
+                const name = c.name && c.name !== 'Unknown' ? c.name : 'Unknown Caller';
+                const initial = name.charAt(0).toUpperCase();
+                const type = c.type || 'Unknown';
+                const typeClass = type.includes('Incoming') ? 'badge-incoming' : (type.includes('Outgoing') ? 'badge-outgoing' : 'badge-missed');
+                
+                const isDeleted = (c.status || '').includes('Deleted') || (c.status || '').includes('Buffer') || (c.status || '').includes('Carved');
+                const statusBadge = isDeleted ? `<span class="badge badge-deleted">🚨 ${c.status}</span>` : `<span class="badge badge-active">${c.status || 'Active'}</span>`;
+                const logIdx = (c.raw_index !== undefined) ? c.raw_index : index;
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="contact-cell">
+                                <div class="avatar">${initial}</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); font-family: var(--font-mono);">${c.number}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${name}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-family: var(--font-mono); color: var(--text-secondary); font-size: 0.82rem;">${c.date || '--'}</td>
+                        <td style="font-weight: 600; font-family: var(--font-mono);">${c.duration || '0s'}</td>
+                        <td><span class="badge ${typeClass}">${type}</span></td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.45rem;">
+                                <a class="btn btn-sm btn-accent" href="/api/record/export?index=${logIdx}" download title="Download individual evidence certificate">
+                                    <span>⬇️ Export</span>
+                                </a>
+                                <button class="btn btn-delete btn-sm" onclick="deleteCallRecord(${logIdx})" title="Delete call record">
+                                    <span>🗑️ Delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function deleteCallRecord(index) {
+            if (!confirm('Are you sure you want to delete this call record from the evidence database?')) {
+                return;
+            }
+            try {
+                const res = await fetch(`/api/logs/delete?index=${index}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    allCallsMaster = allCallsMaster.filter(c => c.raw_index !== index);
+                    allCallsMaster.forEach((c, i) => { c.raw_index = i; });
+                    filterCallsLocally();
+                } else {
+                    alert(data.detail || 'Failed to delete call record.');
+                }
+            } catch (e) {
+                alert('Error deleting call record: ' + e);
+            }
+        }
+
+        // Image Vault Logic (With Individual Download)
+        async function loadImages() {
+            try {
+                const res = await fetch('/api/images');
+                rawImagesData = await res.json();
+
+                const totalImgs = (rawImagesData.images || []).length;
+                const totalEnh = (rawImagesData.enhanced || []).length;
+
+                document.getElementById('statImages').textContent = totalImgs;
+                document.getElementById('badgeImages').textContent = totalImgs;
+                document.getElementById('countAllImgs').textContent = totalImgs;
+                document.getElementById('countEnhImgs').textContent = totalEnh;
+                document.getElementById('statEnhanced').textContent = `${totalEnh} AI Super-Resolved`;
+
+                renderImages();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function filterImageCategory(cat) {
+            selectedImageCategory = cat;
+            document.querySelectorAll('#tab-images .pill-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderImages();
+        }
+
+        function filterImages() {
+            renderImages();
+        }
+
+        function renderImages() {
+            const container = document.getElementById('imageGalleryContainer');
+            const search = (document.getElementById('imageSearchInput').value || '').toLowerCase();
+
+            let items = [];
+            if (selectedImageCategory === 'enhanced') {
+                items = (rawImagesData.enhanced || []).map(e => ({
+                    url: e.enhanced_url,
+                    filename: e.filename,
+                    type: '✨ AI Super-Resolved (HD)',
+                    dims: e.enhanced_dims,
+                    is_enhanced: true
+                }));
+            } else if (selectedImageCategory === 'carved') {
+                items = (rawImagesData.images || []).filter(img => (img.type || '').includes('Thumbnail')).map(img => ({
+                    url: img.url,
+                    filename: img.filename,
+                    type: img.type,
+                    dims: 'Carved Thumbnail'
+                }));
+            } else {
+                const enh = (rawImagesData.enhanced || []).map(e => ({
+                    url: e.enhanced_url,
+                    filename: e.filename,
+                    type: '✨ AI Enhanced',
+                    dims: e.enhanced_dims,
+                    is_enhanced: true
+                }));
+                const standard = (rawImagesData.images || []).map(img => ({
+                    url: img.url,
+                    filename: img.filename,
+                    type: img.type,
+                    dims: 'Thumbnail'
+                }));
+                items = enh.concat(standard);
+            }
+
+            if (search) {
+                items = items.filter(it => it.filename.toLowerCase().includes(search));
+            }
+
+            if (items.length === 0) {
+                container.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><h3>No images match criteria</h3></div>`;
+                return;
+            }
+
+            container.innerHTML = items.slice(0, 120).map(img => {
+                const isSelected = selectedImageFilenames.has(img.filename) ? 'checked' : '';
+                const downloadUrl = `/api/image/download?filename=${encodeURIComponent(img.filename)}`;
+                return `
+                    <div class="media-card">
+                        <div style="position: absolute; top: 8px; left: 8px; z-index: 10;">
+                            <input type="checkbox" onchange="toggleSelectImage('${img.filename}')" ${isSelected} style="width: 16px; height: 16px; cursor: pointer;">
+                        </div>
+                        <img src="${img.url}" class="media-thumb" loading="lazy" onclick="openLightbox('${img.url}', '${img.filename}', '${img.dims}')" />
+                        <div class="media-card-body">
+                            <div class="media-title" title="${img.filename}">${img.filename}</div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <span class="badge" style="background: rgba(6,182,212,0.15); color:#38bdf8; font-size: 0.7rem;">${img.type}</span>
+                                <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">${img.dims}</span>
+                            </div>
+                            <div class="media-actions">
+                                <button class="btn btn-sm btn-accent" style="flex: 1;" onclick="openLightbox('${img.url}', '${img.filename}', '${img.dims}')">
+                                    <span>🔍 Inspect</span>
+                                </button>
+                                <a class="btn btn-sm btn-primary" style="flex: 1;" href="${downloadUrl}" download="${img.filename}" title="Download image individually">
+                                    <span>⬇️ Download</span>
+                                </a>
+                                <button class="btn btn-sm btn-delete" onclick="deleteImageFile('${img.filename}')" title="Delete image">
+                                    <span>🗑️</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleSelectImage(filename) {
+            if (selectedImageFilenames.has(filename)) {
+                selectedImageFilenames.delete(filename);
+            } else {
+                selectedImageFilenames.add(filename);
+            }
+        }
+
+        function toggleSelectAllImages() {
+            const all = (rawImagesData.images || []).concat(rawImagesData.enhanced || []);
+            if (selectedImageFilenames.size > 0) {
+                selectedImageFilenames.clear();
+            } else {
+                all.forEach(i => selectedImageFilenames.add(i.filename));
+            }
+            renderImages();
+        }
+
+        async function downloadSelectedImages() {
+            if (selectedImageFilenames.size === 0) {
+                alert('Please select at least one image using the checkboxes.');
+                return;
+            }
+            try {
+                const res = await fetch('/api/images/download-batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filenames: Array.from(selectedImageFilenames) })
+                });
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'Selected_Recovered_Images.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                } else {
+                    alert('Batch download failed.');
+                }
+            } catch (e) {
+                alert('Error downloading images: ' + e);
+            }
+        }
+
+        async function deleteImageFile(filename) {
+            if (!confirm(`Are you sure you want to delete image '${filename}' from the vault?`)) return;
+            try {
+                const res = await fetch(`/api/images/delete?filename=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    rawImagesData.images = (rawImagesData.images || []).filter(i => i.filename !== filename);
+                    rawImagesData.enhanced = (rawImagesData.enhanced || []).filter(e => e.filename !== filename);
+                    selectedImageFilenames.delete(filename);
+                    const totalImgs = (rawImagesData.images || []).length;
+                    const totalEnh = (rawImagesData.enhanced || []).length;
+                    document.getElementById('statImages').textContent = totalImgs;
+                    document.getElementById('badgeImages').textContent = totalImgs;
+                    document.getElementById('countAllImgs').textContent = totalImgs;
+                    document.getElementById('countEnhImgs').textContent = totalEnh;
+                    renderImages();
+                } else {
+                    alert(data.detail || 'Failed to delete image.');
+                }
+            } catch (e) {
+                alert('Error deleting image: ' + e);
+            }
+        }
+
+        function deleteCurrentLightboxImage() {
+            if (currentLightboxFilename) {
+                deleteImageFile(currentLightboxFilename);
+                closeLightbox();
+            }
+        }
+
+        // Lightbox Modal
+        function openLightbox(url, filename, dims) {
+            currentLightboxFilename = filename;
+            document.getElementById('modalImgPreview').src = url;
+            document.getElementById('modalImgTitle').textContent = filename;
+            document.getElementById('modalImgDims').textContent = `Resolution / Dimensions: ${dims}`;
+            document.getElementById('modalDownloadBtn').href = `/api/image/download?filename=${encodeURIComponent(filename)}`;
+            document.getElementById('modalDownloadBtn').setAttribute('download', filename);
+            document.getElementById('lightboxModal').style.display = 'flex';
+        }
+
+        function closeLightbox(e) {
+            document.getElementById('lightboxModal').style.display = 'none';
+        }
+
+        // Call Recordings Logic (With Individual Audio Download & Deletion)
+        async function loadAudio() {
+            try {
+                const res = await fetch('/api/audio');
+                const data = await res.json();
+                currentAudio = data.recordings || [];
+
+                document.getElementById('statAudio').textContent = data.total || 0;
+                document.getElementById('badgeAudio').textContent = data.total || 0;
+
+                renderAudio();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function renderAudio() {
+            const container = document.getElementById('audioListContainer');
+            const search = (document.getElementById('audioSearchInput').value || '').toLowerCase();
+
+            const filtered = currentAudio.filter(a => {
+                return (a.contact_name || '').toLowerCase().includes(search) || 
+                       (a.phone_number || '').toLowerCase().includes(search) ||
+                       (a.title || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-state">No call recordings found.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(a => {
+                const downloadUrl = `/api/audio/download?filename=${encodeURIComponent(a.local_file)}`;
+                return `
+                    <div class="audio-card">
+                        <div class="audio-meta">
+                            <div class="audio-icon">🎙️</div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 1rem; color: var(--text-primary);">${a.contact_name}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">
+                                    ${a.date} | ${a.file_size} | <span style="color: var(--accent-amber); font-weight: 600;">${a.file_type}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <audio controls preload="none">
+                            <source src="${a.stream_url}" type="audio/mp4">
+                            Your browser does not support audio playback.
+                        </audio>
+                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                            <a class="btn btn-primary" href="${downloadUrl}" download="${a.local_file}">
+                                <span>⬇️ Download Audio (.m4a)</span>
+                            </a>
+                            <button class="btn btn-delete" onclick="deleteAudioFile('${a.local_file}')" title="Delete recording">
+                                <span>🗑️ Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function deleteAudioFile(filename) {
+            if (!confirm(`Are you sure you want to delete call recording '${filename}'?`)) return;
+            try {
+                const res = await fetch(`/api/audio/delete?filename=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    currentAudio = currentAudio.filter(a => a.local_file !== filename && a.filename !== filename);
+                    document.getElementById('statAudio').textContent = currentAudio.length;
+                    document.getElementById('badgeAudio').textContent = currentAudio.length;
+                    renderAudio();
+                } else {
+                    alert(data.detail || 'Failed to delete recording.');
+                }
+            } catch (e) {
+                alert('Error deleting audio recording: ' + e);
+            }
+        }
+
+        // SMS Logic
+        async function loadSMS() {
+            try {
+                let url = '/api/sms';
+                if (selectedSMSCategory && selectedSMSCategory !== 'all') {
+                    url += `?category=${encodeURIComponent(selectedSMSCategory)}`;
+                }
+                const res = await fetch(url);
+                const data = await res.json();
+                currentSMS = data.messages || [];
+
+                document.getElementById('statSMS').textContent = data.total || 0;
+                document.getElementById('badgeSMS').textContent = data.total || 0;
+                const finCount = (data.categories['Bank & Financial'] || 0) + (data.categories['OTP / Verification'] || 0);
+                document.getElementById('statSMSCategories').textContent = `${finCount} Financial / OTP tokens`;
+
+                renderSMS();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function filterSMSCategory(cat) {
+            selectedSMSCategory = cat;
+            document.querySelectorAll('#tab-sms .pill-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            loadSMS();
+        }
+
+        function renderSMS() {
+            const tbody = document.getElementById('smsTableBody');
+            const search = (document.getElementById('smsSearchInput').value || '').toLowerCase();
+
+            const filtered = currentSMS.filter(m => {
+                return (m.address || '').toLowerCase().includes(search) || 
+                       (m.body || '').toLowerCase().includes(search) ||
+                       (m.name || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No SMS messages found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(m => {
+                let badgeClass = 'badge-active';
+                if (m.category === 'Bank & Financial') badgeClass = 'badge-bank';
+                if (m.category === 'OTP / Verification') badgeClass = 'badge-otp';
+                if (m.category === 'Personal') badgeClass = 'badge-personal';
+                if (m.category === 'Spam / Promo') badgeClass = 'badge-spam';
+
+                return `
+                    <tr>
+                        <td>
+                            <strong style="color: var(--accent-cyan); font-family: var(--font-mono);">${m.address}</strong>
+                            ${m.name && m.name !== m.address ? `<div style="font-size:0.75rem; color:var(--text-muted);">${m.name}</div>` : ''}
+                        </td>
+                        <td style="max-width: 480px; line-height: 1.45; color: var(--text-primary);">${m.body}</td>
+                        <td style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-secondary);">${m.date}</td>
+                        <td><span class="badge ${badgeClass}">${m.category}</span></td>
+                        <td><span class="badge" style="background: rgba(255,255,255,0.06);">${m.type || 'Inbox'}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Contacts Logic
+        async function loadContacts() {
+            try {
+                const res = await fetch('/api/contacts');
+                const data = await res.json();
+                currentContacts = data.contacts || [];
+
+                document.getElementById('statContacts').textContent = data.total || 0;
+                document.getElementById('badgeContacts').textContent = data.total || 0;
+
+                renderContacts();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function renderContacts() {
+            const tbody = document.getElementById('contactsTableBody');
+            const search = (document.getElementById('contactsSearchInput').value || '').toLowerCase();
+
+            const filtered = currentContacts.filter(c => {
+                return (c.name || '').toLowerCase().includes(search) || (c.number || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="empty-state">No contacts found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => `
+                <tr>
+                    <td>
+                        <div class="contact-cell">
+                            <div class="avatar">${(c.name || 'U').charAt(0).toUpperCase()}</div>
+                            <strong style="font-size: 0.95rem;">${c.name || 'Unknown'}</strong>
+                        </div>
+                    </td>
+                    <td style="font-family: var(--font-mono); color: #38bdf8; font-weight: 600;">${c.number}</td>
+                    <td><span class="badge" style="background: rgba(255,255,255,0.06);">${c.source || 'Phonebook'}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // Forensic Analytics Rendering
+        function renderAnalytics() {
+            const dirContainer = document.getElementById('analyticsDirectionBars');
+            const topContainer = document.getElementById('analyticsTopContacts');
+
+            let incoming = 0, outgoing = 0, missed = 0;
+            const contactFrequency = {};
+
+            currentCalls.forEach(c => {
+                const t = (c.type || '').toLowerCase();
+                if (t.includes('incoming')) incoming++;
+                else if (t.includes('outgoing')) outgoing++;
+                else if (t.includes('missed')) missed++;
+
+                const name = c.name && c.name !== 'Unknown' ? c.name : c.number;
+                if (name) contactFrequency[name] = (contactFrequency[name] || 0) + 1;
+            });
+
+            const total = (incoming + outgoing + missed) || 1;
+            const inPct = Math.round((incoming / total) * 100);
+            const outPct = Math.round((outgoing / total) * 100);
+            const misPct = Math.round((missed / total) * 100);
+
+            dirContainer.innerHTML = `
+                <div class="chart-bar-row">
+                    <span style="width: 80px; color:#6ee7b7; font-weight:600;">Incoming</span>
+                    <div class="bar-container"><div class="bar-fill" style="width: ${inPct}%; background: var(--accent-emerald);"></div></div>
+                    <span style="font-family: var(--font-mono); width: 45px; text-align:right;">${incoming} (${inPct}%)</span>
+                </div>
+                <div class="chart-bar-row">
+                    <span style="width: 80px; color:#93c5fd; font-weight:600;">Outgoing</span>
+                    <div class="bar-container"><div class="bar-fill" style="width: ${outPct}%; background: var(--accent-blue);"></div></div>
+                    <span style="font-family: var(--font-mono); width: 45px; text-align:right;">${outgoing} (${outPct}%)</span>
+                </div>
+                <div class="chart-bar-row">
+                    <span style="width: 80px; color:#fda4af; font-weight:600;">Missed</span>
+                    <div class="bar-container"><div class="bar-fill" style="width: ${misPct}%; background: var(--accent-rose);"></div></div>
+                    <span style="font-family: var(--font-mono); width: 45px; text-align:right;">${missed} (${misPct}%)</span>
+                </div>
+            `;
+
+            const sortedContacts = Object.entries(contactFrequency).sort((a,b) => b[1] - a[1]).slice(0, 5);
+            const maxCount = sortedContacts.length > 0 ? sortedContacts[0][1] : 1;
+
+            topContainer.innerHTML = sortedContacts.map(([name, count]) => {
+                const pct = Math.round((count / maxCount) * 100);
+                return `
+                    <div class="chart-bar-row">
+                        <span style="width: 140px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</span>
+                        <div class="bar-container"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+                        <span style="font-family: var(--font-mono); width: 40px; text-align:right;">${count}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // FILES & DOCUMENTS LOGIC
+        let currentFiles = [];
+        let selectedFileCategory = 'all';
+
+        async function loadFiles() {
+            try {
+                let url = '/api/files';
+                if (selectedFileCategory && selectedFileCategory !== 'all') {
+                    url += `?category=${encodeURIComponent(selectedFileCategory)}`;
+                }
+                const res = await fetch(url);
+                const data = await res.json();
+                currentFiles = data.files || [];
+
+                document.getElementById('statFiles').textContent = data.total || currentFiles.length;
+                document.getElementById('badgeFiles').textContent = data.total || currentFiles.length;
+                if (document.getElementById('countAllFiles')) {
+                    document.getElementById('countAllFiles').textContent = data.total || currentFiles.length;
+                }
+
+                renderFiles();
+            } catch (e) {
+                console.error('Error loading files:', e);
+            }
+        }
+
+        function filterFileCategory(cat) {
+            selectedFileCategory = cat;
+            document.querySelectorAll('#fileCategoryPills .pill-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderFiles();
+        }
+
+        function renderFiles() {
+            const tbody = document.getElementById('filesTableBody');
+            const search = (document.getElementById('fileSearchInput').value || '').toLowerCase();
+
+            let filtered = currentFiles.filter(f => {
+                const matchesSearch = (f.filename || '').toLowerCase().includes(search) || 
+                                      (f.category || '').toLowerCase().includes(search) ||
+                                      (f.extension || '').toLowerCase().includes(search);
+                if (!matchesSearch) return false;
+
+                if (selectedFileCategory === 'pdf') return (f.extension || '').toLowerCase() === '.pdf';
+                if (selectedFileCategory === 'word') return ['.docx', '.doc', '.xlsx', '.xls', '.pptx', '.ppt', '.txt'].includes((f.extension || '').toLowerCase());
+                if (selectedFileCategory === 'apk') return (f.extension || '').toLowerCase() === '.apk';
+                if (selectedFileCategory === 'archive') return ['.zip', '.rar', '.7z', '.tar', '.gz'].includes((f.extension || '').toLowerCase());
+                if (selectedFileCategory === 'carved') return (f.status || '').includes('Carved') || (f.status || '').includes('Fragment');
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><h3>No documents matched</h3><p>Try searching for a different keyword or resetting filters.</p></td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(f => {
+                let icon = '📄';
+                const ext = (f.extension || '').toLowerCase();
+                if (ext === '.pdf') icon = '📕';
+                else if (['.docx', '.doc', '.txt'].includes(ext)) icon = '📝';
+                else if (['.xlsx', '.xls'].includes(ext)) icon = '📊';
+                else if (ext === '.apk') icon = '📦';
+                else if (['.zip', '.rar', '.7z'].includes(ext)) icon = '🗜️';
+
+                const isCarved = (f.status || '').includes('Carved') || (f.status || '').includes('Fragment');
+                const statusBadge = isCarved 
+                    ? `<span class="badge badge-deleted">🔍 ${f.status}</span>` 
+                    : `<span class="badge badge-active">${f.status || 'Active Document'}</span>`;
+
+                const hashPreview = f.sha256 && f.sha256.length > 16 
+                    ? `<div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;" title="${f.sha256}">SHA: ${f.sha256.substring(0, 16)}...</div>` 
+                    : '';
+
+                const downloadUrl = `/api/files/download?filename=${encodeURIComponent(f.filename)}`;
+
+                return `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 1.35rem;">${icon}</span>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); font-size: 0.88rem; max-width: 380px; word-break: break-all;">${f.filename}</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">${f.remote_path || ''}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge" style="background: rgba(255,255,255,0.06);">${f.category || 'Document'}</span></td>
+                        <td style="font-family: var(--font-mono); font-weight: 600; color: #38bdf8;">${f.size_formatted || '--'}</td>
+                        <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary);">${f.modified_date || '--'}</td>
+                        <td>
+                            ${statusBadge}
+                            ${hashPreview}
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.45rem;">
+                                <a class="btn btn-sm btn-primary" href="${downloadUrl}" download="${f.filename}" title="Download file directly">
+                                    <span>⬇️ Download</span>
+                                </a>
+                                <button class="btn btn-sm btn-delete" onclick="deleteFileRecord('${f.filename}')" title="Delete file">
+                                    <span>🗑️ Delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function deleteFileRecord(filename) {
+            if (!confirm(`Are you sure you want to delete file '${filename}'?`)) return;
+            try {
+                const res = await fetch(`/api/files/delete?filename=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    currentFiles = currentFiles.filter(f => f.filename !== filename);
+                    document.getElementById('statFiles').textContent = currentFiles.length;
+                    document.getElementById('badgeFiles').textContent = currentFiles.length;
+                    if (document.getElementById('countAllFiles')) {
+                        document.getElementById('countAllFiles').textContent = currentFiles.length;
+                    }
+                    renderFiles();
+                } else {
+                    alert(data.detail || 'Failed to delete file.');
+                }
+            } catch (e) {
+                alert('Error deleting file: ' + e);
+            }
+        }
+
+        // APPS INVENTORY & RESIDUE LOGIC
+        let currentAppsData = { installed_apps: [], uninstalled_residue: [] };
+        let selectedAppCategory = 'all';
+
+        async function loadApps() {
+            try {
+                const res = await fetch('/api/apps');
+                const data = await res.json();
+                currentAppsData = data;
+
+                const instCount = data.installed_apps_count || (data.installed_apps || []).length;
+                const resCount = data.uninstalled_residue_count || (data.uninstalled_residue || []).length;
+
+                document.getElementById('statApps').textContent = instCount + resCount;
+                document.getElementById('badgeApps').textContent = instCount + resCount;
+                document.getElementById('statAppsSub').textContent = `${instCount} Installed • ${resCount} Residual Traces`;
+                
+                if (document.getElementById('countTotalApps')) document.getElementById('countTotalApps').textContent = instCount + resCount;
+                if (document.getElementById('countInstalledApps')) document.getElementById('countInstalledApps').textContent = instCount;
+                if (document.getElementById('countUninstalledApps')) document.getElementById('countUninstalledApps').textContent = resCount;
+                if (document.getElementById('uninstalledResidueCountBadge')) document.getElementById('uninstalledResidueCountBadge').textContent = `${resCount} Residues Detected`;
+
+                renderApps();
+            } catch (e) {
+                console.error('Error loading apps:', e);
+            }
+        }
+
+        function filterAppCategory(cat) {
+            selectedAppCategory = cat;
+            document.querySelectorAll('#appCategoryPills .pill-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderApps();
+        }
+
+        function renderApps() {
+            const tbody = document.getElementById('appsTableBody');
+            const search = (document.getElementById('appSearchInput').value || '').toLowerCase();
+
+            let list = [];
+            if (selectedAppCategory === 'installed') {
+                list = currentAppsData.installed_apps || [];
+            } else if (selectedAppCategory === 'uninstalled') {
+                list = currentAppsData.uninstalled_residue || [];
+            } else {
+                list = [...(currentAppsData.uninstalled_residue || []), ...(currentAppsData.installed_apps || [])];
+            }
+
+            const filtered = list.filter(a => {
+                return (a.name || '').toLowerCase().includes(search) || 
+                       (a.package_name || '').toLowerCase().includes(search) ||
+                       (a.category || '').toLowerCase().includes(search);
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No matching applications or residues found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(a => {
+                const isUninstalled = !a.is_installed;
+                const statusBadge = isUninstalled 
+                    ? `<span class="badge badge-deleted">🚨 Uninstalled Residue</span>`
+                    : `<span class="badge badge-active">Active Installed</span>`;
+
+                const icon = isUninstalled ? '🗑️' : '📱';
+                const dateText = isUninstalled 
+                    ? `<span style="color: #fda4af;">Shared Storage Residue</span>`
+                    : `${a.last_update_time || a.first_install_time || '--'}`;
+
+                const riskBadge = a.forensic_risk ? `<div style="font-size:0.75rem; color:var(--accent-amber); margin-top:2px;">⚠️ ${a.forensic_risk}</div>` : '';
+
+                return `
+                    <tr style="${isUninstalled ? 'background: rgba(244, 63, 94, 0.05);' : ''}">
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 1.3rem;">${icon}</span>
+                                <div>
+                                    <strong style="color: ${isUninstalled ? '#fda4af' : 'var(--text-primary)'};">${a.name}</strong>
+                                    ${isUninstalled ? `<div style="font-size:0.75rem; color:var(--text-muted);">${a.evidence_found || ''}</div>` : ''}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-family: var(--font-mono); font-size: 0.8rem; color: #38bdf8;">${a.package_name}</td>
+                        <td style="font-family: var(--font-mono); font-size: 0.82rem;">${a.version_name || (isUninstalled ? 'Residual' : '--')}</td>
+                        <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary);">${dateText}</td>
+                        <td>
+                            <span class="badge" style="background: rgba(255,255,255,0.06);">${a.category || 'General'}</span>
+                            ${riskBadge}
+                        </td>
+                        <td>${statusBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // APP CHATS & VAULT LOGIC
+        let currentChatsData = { databases: [], voice_notes: [], statuses: [], telegram: {} };
+
+        async function loadChats() {
+            try {
+                const res = await fetch('/api/chats');
+                const data = await res.json();
+                currentChatsData = data;
+
+                const dbCount = (data.databases || []).length;
+                const vnCount = (data.voice_notes || []).length;
+
+                document.getElementById('statChats').textContent = `${dbCount} DBs • ${vnCount} Audio`;
+                document.getElementById('badgeChats').textContent = dbCount + vnCount;
+                document.getElementById('chatDbCountBadge').textContent = `${dbCount} Databases Available`;
+                document.getElementById('chatVnCountBadge').textContent = `${vnCount} Voice Notes`;
+
+                renderChats();
+            } catch (e) {
+                console.error('Error loading chats:', e);
+            }
+        }
+
+        function renderChats() {
+            // 1. Render WhatsApp Databases
+            const dbContainer = document.getElementById('waDatabasesList');
+            const dbs = currentChatsData.databases || [];
+            if (dbs.length === 0) {
+                dbContainer.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No encrypted WhatsApp databases detected.</div>`;
+            } else {
+                dbContainer.innerHTML = dbs.map(db => `
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 1.4rem;">🔐</span>
+                            <span class="badge badge-personal">${db.crypt_type || 'Crypt14'}</span>
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-primary); word-break: break-all;">${db.name}</div>
+                            <div style="font-size: 0.8rem; color: #38bdf8; font-weight: 600; margin-top: 3px;">Size: ${db.size_formatted}</div>
+                            <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">${db.remote_path}</div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                            <a class="btn btn-primary" style="flex: 1; justify-content: center;" href="/api/chats/download-db?name=${encodeURIComponent(db.name)}" download="${db.name}">
+                                <span>⬇️ Download (.crypt14)</span>
+                            </a>
+                            <button class="btn btn-delete" onclick="deleteChatDatabase('${db.name}')" title="Delete database backup">
+                                <span>🗑️ Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 2. Render WhatsApp Voice Notes
+            const vnContainer = document.getElementById('waVoiceNotesList');
+            const vns = currentChatsData.voice_notes || [];
+            if (vns.length === 0) {
+                vnContainer.innerHTML = `<div class="empty-state">No WhatsApp voice notes extracted yet.</div>`;
+            } else {
+                vnContainer.innerHTML = vns.map(vn => `
+                    <div class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-icon">🎙️</span>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem; font-family: var(--font-mono); color: var(--text-primary);">${vn.filename}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">
+                                    Folder: ${vn.folder} | ${vn.size_formatted} | ${vn.date}
+                                </div>
+                            </div>
+                        </div>
+                        <audio controls preload="none">
+                            <source src="/whatsapp_data/voice_notes/${vn.filename}" type="audio/ogg">
+                            <source src="/whatsapp_data/voice_notes/${vn.filename}" type="audio/mp4">
+                            Your browser does not support audio playback.
+                        </audio>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <a class="btn btn-primary" href="/api/chats/download-voicenote?filename=${encodeURIComponent(vn.filename)}" download="${vn.filename}">
+                                <span>⬇️ Download</span>
+                            </a>
+                            <button class="btn btn-delete" onclick="deleteVoiceNote('${vn.filename}')" title="Delete voice note">
+                                <span>🗑️ Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 3. Render Telegram Status
+            const tgBox = document.getElementById('telegramStatusBox');
+            const tg = currentChatsData.telegram || {};
+            if (tg.installed) {
+                tgBox.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="color: #6ee7b7; font-weight: 700;">✅ ${tg.status}</span>
+                        <span class="badge badge-active">${(tg.cache_folders || []).length} Folders Found</span>
+                    </div>
+                    <div style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.82rem;">
+                        Detected Cache Directories: <code style="color: var(--accent-cyan); font-family: var(--font-mono);">${(tg.cache_folders || []).join(', ') || 'Telegram Files & Logs'}</code>
+                    </div>
+                `;
+            } else {
+                tgBox.innerHTML = `<span style="color: var(--text-muted);">No independent Telegram cache directories detected in shared storage.</span>`;
+            }
+
+            // 4. Render WhatsApp Statuses
+            const statContainer = document.getElementById('waStatusesGallery');
+            const statuses = currentChatsData.statuses || [];
+            if (statuses.length === 0) {
+                statContainer.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No cached statuses found.</div>`;
+            } else {
+                statContainer.innerHTML = statuses.map(s => `
+                    <div class="media-card">
+                        <img class="media-thumb" src="/whatsapp_data/statuses/${s.filename || s}" alt="WhatsApp Status" onclick="openLightbox('/whatsapp_data/statuses/${s.filename || s}', '${s.filename || s}', 'WhatsApp Status Story')">
+                        <div class="media-card-body">
+                            <div class="media-title">${s.filename || s}</div>
+                            <a class="btn btn-sm btn-accent" style="width: 100%; justify-content: center;" href="/whatsapp_data/statuses/${s.filename || s}" download>
+                                <span>⬇️ Download</span>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function deleteChatDatabase(name) {
+            if (!confirm(`Are you sure you want to delete encrypted WhatsApp database '${name}'?`)) return;
+            try {
+                const res = await fetch(`/api/chats/delete?name=${encodeURIComponent(name)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    currentChatsData.databases = (currentChatsData.databases || []).filter(d => d.name !== name);
+                    document.getElementById('chatDbCountBadge').textContent = `${currentChatsData.databases.length} Databases Available`;
+                    document.getElementById('statChats').textContent = `${currentChatsData.databases.length} DBs • ${(currentChatsData.voice_notes || []).length} Audio`;
+                    document.getElementById('badgeChats').textContent = currentChatsData.databases.length + (currentChatsData.voice_notes || []).length;
+                    renderChats();
+                } else {
+                    alert(data.detail || 'Failed to delete database.');
+                }
+            } catch (e) {
+                alert('Error deleting database: ' + e);
+            }
+        }
+
+        async function deleteVoiceNote(filename) {
+            if (!confirm(`Are you sure you want to delete voice note '${filename}'?`)) return;
+            try {
+                const res = await fetch(`/api/chats/delete?name=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    currentChatsData.voice_notes = (currentChatsData.voice_notes || []).filter(v => v.filename !== filename);
+                    document.getElementById('chatVnCountBadge').textContent = `${currentChatsData.voice_notes.length} Voice Notes`;
+                    document.getElementById('statChats').textContent = `${(currentChatsData.databases || []).length} DBs • ${currentChatsData.voice_notes.length} Audio`;
+                    document.getElementById('badgeChats').textContent = (currentChatsData.databases || []).length + currentChatsData.voice_notes.length;
+                    renderChats();
+                } else {
+                    alert(data.detail || 'Failed to delete voice note.');
+                }
+            } catch (e) {
+                alert('Error deleting voice note: ' + e);
+            }
+        }
+
+        // Trigger Full Recovery
+        async function triggerRecovery() {
+            const btn = document.getElementById('scanBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳ Extracting multi-vector forensics...</span>';
+
+            try {
+                const res = await fetch('/api/recover', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        months: activeMonths,
+                        carve_images: true,
+                        ai_enhance: true,
+                        extract_sms: true,
+                        extract_contacts: true,
+                        extract_audio: true,
+                        extract_whatsapp: true,
+                        extract_files: true,
+                        extract_apps: true,
+                        extract_chats: true
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    await loadCalls(true);
+                    await loadImages();
+                    await loadAudio();
+                    await loadSMS();
+                    await loadContacts();
+                    await loadFiles();
+                    await loadApps();
+                    await loadChats();
+                    await fetchDeviceDetails();
+                } else {
+                    alert(data.detail || 'Recovery failed.');
+                }
+            } catch (e) {
+                alert('Recovery request error: ' + e);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>⚡ Run Full Forensic Acquisition</span>';
+            }
+        }
+
+        // Auto Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            checkDeviceStatus();
+            setInterval(checkDeviceStatus, 5000);
+            loadCalls();
+            loadImages();
+            loadAudio();
+            loadSMS();
+            loadContacts();
+            loadFiles();
+            loadApps();
+            loadChats();
+            setTimeout(init3DTiltEffects, 600);
+        });
+    </script>
+</body>
+</html>
